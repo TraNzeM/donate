@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Поддержать проект — TraNzeM</title>
+<meta name="description" content="Поддержать разработку: криптовалюта (USDT, BTC, ETH, TON) и ЮMoney.">
+<style>
+  :root {
+    --bg: #0d1117;
+    --bg-card: #161b22;
+    --bg-hover: #1c2430;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-dim: #8b949e;
+    --accent: #f778ba;
+    --accent-hover: #ff8cc4;
+    --ok: #3fb950;
+    --radius: 12px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 20px 64px;
+  }
+  .wrap { width: 100%; max-width: 760px; }
+  header { text-align: center; margin-bottom: 40px; }
+  .heart { font-size: 44px; line-height: 1; margin-bottom: 16px; }
+  h1 { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+  .sub { color: var(--text-dim); font-size: 15px; line-height: 1.6; max-width: 520px; margin: 0 auto; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+  }
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: border-color .15s ease;
+  }
+  .card:hover { border-color: #444c56; }
+  .row { display: flex; align-items: center; gap: 10px; }
+  .coin {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 800; color: #0d1117;
+    flex-shrink: 0;
+  }
+  .c-usdt { background: #26a17b; }
+  .c-btc  { background: #f7931a; }
+  .c-eth  { background: #8b9bb4; }
+  .c-ton  { background: #0098ea; }
+  .c-ym   { background: #ffcc00; }
+  .name { font-size: 15px; font-weight: 600; }
+  .hint { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+  .addr {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--text-dim);
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    word-break: break-all;
+    user-select: all;
+  }
+  .actions { display: flex; gap: 10px; align-items: center; }
+  .btn {
+    flex: 1;
+    background: var(--accent);
+    color: #0d1117;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .15s ease;
+  }
+  .btn:hover { background: var(--accent-hover); }
+  .btn:active { transform: scale(.98); }
+  .btn.ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    font-weight: 500;
+  }
+  .btn.ghost:hover { background: var(--bg-hover); border-color: #444c56; }
+  .btn.copied { background: var(--ok); }
+  .qr {
+    width: 96px; height: 96px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #fff;
+    padding: 4px;
+    flex-shrink: 0;
+  }
+  .qr img { width: 100%; height: 100%; display: block; border-radius: 4px; }
+  footer {
+    margin-top: 40px;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  footer a { color: var(--text-dim); }
+  footer a:hover { color: var(--text); }
+  .toast {
+    position: fixed;
+    bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--ok);
+    color: #0d1117;
+    font-size: 14px; font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 999px;
+    opacity: 0;
+    transition: transform .25s ease, opacity .25s ease;
+    pointer-events: none;
+    z-index: 10;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+  .modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(1, 4, 9, .75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease;
+    z-index: 20;
+  }
+  .modal.show { opacity: 1; pointer-events: auto; }
+  .modal-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+    max-width: 92vw;
+  }
+  .modal-box h3 { font-size: 17px; margin-bottom: 4px; }
+  .modal-box .hint { margin-bottom: 18px; }
+  .modal-box img {
+    width: 240px; height: 240px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 8px;
+    display: block;
+    margin: 0 auto 18px;
+  }
+  .modal-box .maddr {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    word-break: break-all;
+    margin-bottom: 18px;
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+  }
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 20px;
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 28px;
+    cursor: pointer;
+    line-height: 1;
+  }
+  .modal-close:hover { color: var(--text); }
+  @media (max-width: 400px) {
+    .grid { grid-template-columns: 1fr; }
+    h1 { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="heart">❤️</div>
+    <h1>Поддержать проект</h1>
+    <p class="sub">
+      Если мои проекты экономят твоё время — можно отблагодарить.
+      Любая сумма важна, спасибо за поддержку!
+    </p>
+  </header>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    <p>
+      Проекты: <a href="https://github.com/TraNzeM" rel="noopener">github.com/TraNzeM</a>
+    </p>
+  </footer>
+</div>
+
+<div class="toast" id="toast">Скопировано ✓</div>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose" aria-label="Закрыть">×</button>
+    <h3 id="modalName"></h3>
+    <p class="hint" id="modalHint"></p>
+    <img id="modalQr" alt="QR-код">
+    <div class="maddr" id="modalAddr"></div>
+    <button class="btn" id="modalCopy" style="width:100%;">Скопировать адрес</button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+//  ВСТАВЬ СВОИ АДРЕСА СЮДА. Пустые поля = карточка скрывается.
+// ============================================================
+const CONFIG = {
+  yoomoney: "",            // https://yoomoney.ru/to/4100XXXXXXXXXX
+  usdtTrc20: "",           // адрес USDT (TRC20)
+  btc: "",                 // адрес BTC
+  eth: "",                 // адрес ETH
+  ton: ""                  // адрес TON
+};
+// ============================================================
+
+const METHODS = [
+  { key: "yoomoney",  cls: "c-ym",  sym: "₽",   name: "ЮMoney",       hint: "Карта, СБП, без комиссии" },
+  { key: "usdtTrc20", cls: "c-usdt", sym: "U",  name: "USDT · TRC20", hint: "Сеть TRON (TRC20)" },
+  { key: "btc",       cls: "c-btc",  sym: "₿",  name: "Bitcoin",      hint: "Сеть Bitcoin" },
+  { key: "eth",       cls: "c-eth",  sym: "Ξ",  name: "Ethereum",     hint: "Сеть Ethereum (ERC-20)" },
+  { key: "ton",       cls: "c-ton",  sym: "T",  name: "TON",          hint: "Сеть TON, в т.ч. Telegram Wallet" }
+];
+
+const grid = document.getElementById("grid");
+const toast = document.getElementById("toast");
+const modal = document.getElementById("modal");
+let toastTimer;
+
+function showToast() {
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 1600);
+}
+
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch (e) {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    ta.remove();
+  }
+  showToast();
+}
+
+function qrUrl(data) {
+  return "https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=8&data=" + encodeURIComponent(data);
+}
+
+function openModal(method, value) {
+  document.getElementById("modalName").textContent = method.name;
+  document.getElementById("modalHint").textContent = method.hint;
+  document.getElementById("modalQr").src = qrUrl(value);
+  document.getElementById("modalAddr").textContent = value;
+  modal.classList.add("show");
+  const copyBtn = document.getElementById("modalCopy");
+  copyBtn.onclick = () => copyText(value);
+}
+
+function closeModal() {
+  modal.classList.remove("show");
+}
+
+document.getElementById("modalClose").addEventListener("click", closeModal);
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) closeModal();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeModal();
+});
+
+function render() {
+  const cards = [];
+  for (const m of METHODS) {
+    const value = CONFIG[m.key];
+    if (!value) continue;
+    const display = m.key === "yoomoney" ? value.replace(/^https?:\/\//, "") : value;
+    const qrData = m.key === "yoomoney" ? value : value;
+    cards.push(`
+      <div class="card">
+        <div class="row">
+          <div class="coin ${m.cls}">${m.sym}</div>
+          <div>
+            <div class="name">${m.name}</div>
+            <div class="hint">${m.hint}</div>
+          </div>
+        </div>
+        <div class="addr">${display}</div>
+        <div class="actions">
+          <button class="btn ghost" data-qr="${m.key}">QR</button>
+          <button class="btn" data-copy="${value.replace(/"/g, '&quot;')}">Скопировать адрес</button>
+        </div>
+      </div>
+    `);
+  }
+  if (!cards.length) {
+    grid.innerHTML = `<p class="sub" style="text-align:center;padding:24px 0;">Адреса ещё не добавлены.</p>`;
+    return;
+  }
+  grid.innerHTML = cards.join("");
+
+  grid.querySelectorAll("[data-copy]").forEach(btn => {
+    btn.addEventListener("click", () => copyText(btn.dataset.copy));
+  });
+  grid.querySelectorAll("[data-qr]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const m = METHODS.find(x => x.key === btn.dataset.qr);
+      openModal(m, CONFIG[m.key]);
+    });
+  });
+}
+
+render();
+</script>
+</body>
+</html>
