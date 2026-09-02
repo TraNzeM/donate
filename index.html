@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Поддержать проект — TraNzeM</title>
-<meta name="description" content="Поддержать разработку: криптовалюта (USDT, BTC, ETH, TON) и ЮMoney.">
+<meta name="description" content="Поддержать разработку: криптовалюта (Gram/TON, USDT, BTC, ETH) и ЮMoney.">
 <style>
   :root {
     --bg: #0d1117;
@@ -234,7 +234,7 @@ const CONFIG = {
   usdtTrc20: "",           // адрес USDT (TRC20)
   btc: "",                 // адрес BTC
   eth: "",                 // адрес ETH
-  ton: ""                  // адрес TON
+  ton: "UQBZr79XeiaKddZQu-vvKA-ZpaTv70qM7Xjv0AeSYD2P0ClH"   // адрес Gram (TON)
 };
 // ============================================================
 
@@ -243,7 +243,7 @@ const METHODS = [
   { key: "usdtTrc20", cls: "c-usdt", sym: "U",  name: "USDT · TRC20", hint: "Сеть TRON (TRC20)" },
   { key: "btc",       cls: "c-btc",  sym: "₿",  name: "Bitcoin",      hint: "Сеть Bitcoin" },
   { key: "eth",       cls: "c-eth",  sym: "Ξ",  name: "Ethereum",     hint: "Сеть Ethereum (ERC-20)" },
-  { key: "ton",       cls: "c-ton",  sym: "T",  name: "TON",          hint: "Сеть TON, в т.ч. Telegram Wallet" }
+  { key: "ton",       cls: "c-ton",  sym: "G",  name: "Gram (TON)",   hint: "Сеть TON · Telegram Wallet, DeFi Счёт" }
 ];
 
 const grid = document.getElementById("grid");
