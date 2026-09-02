@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Поддержать проект — TraNzeM</title>
-<meta name="description" content="Поддержать разработку: криптовалюта (Gram/TON, USDT, BTC, ETH) и ЮMoney.">
+<title>Support the project — TraNzeM</title>
+<meta name="description" content="Support development: crypto (Gram/TON, USDT, BTC, ETH) and YooMoney.">
 <style>
   :root {
     --bg: #0d1117;
@@ -196,10 +196,10 @@
 <div class="wrap">
   <header>
     <div class="heart">❤️</div>
-    <h1>Поддержать проект</h1>
+    <h1>Support the project</h1>
     <p class="sub">
-      Если мои проекты экономят твоё время — можно отблагодарить.
-      Любая сумма важна, спасибо за поддержку!
+      If my projects save you time — feel free to say thanks.
+      Any amount is appreciated!
     </p>
   </header>
 
@@ -207,43 +207,43 @@
 
   <footer>
     <p>
-      Проекты: <a href="https://github.com/TraNzeM" rel="noopener">github.com/TraNzeM</a>
+      Projects: <a href="https://github.com/TraNzeM" rel="noopener">github.com/TraNzeM</a>
     </p>
   </footer>
 </div>
 
-<div class="toast" id="toast">Скопировано ✓</div>
+<div class="toast" id="toast">Copied ✓</div>
 
 <div class="modal" id="modal">
   <div class="modal-box">
-    <button class="modal-close" id="modalClose" aria-label="Закрыть">×</button>
+    <button class="modal-close" id="modalClose" aria-label="Close">×</button>
     <h3 id="modalName"></h3>
     <p class="hint" id="modalHint"></p>
-    <img id="modalQr" alt="QR-код">
+    <img id="modalQr" alt="QR code">
     <div class="maddr" id="modalAddr"></div>
-    <button class="btn" id="modalCopy" style="width:100%;">Скопировать адрес</button>
+    <button class="btn" id="modalCopy" style="width:100%;">Copy address</button>
   </div>
 </div>
 
 <script>
 // ============================================================
-//  ВСТАВЬ СВОИ АДРЕСА СЮДА. Пустые поля = карточка скрывается.
+//  PASTE YOUR ADDRESSES HERE. Empty fields = card is hidden.
 // ============================================================
 const CONFIG = {
   yoomoney: "",            // https://yoomoney.ru/to/4100XXXXXXXXXX
-  usdtTrc20: "",           // адрес USDT (TRC20)
-  btc: "",                 // адрес BTC
-  eth: "",                 // адрес ETH
-  ton: "UQBZr79XeiaKddZQu-vvKA-ZpaTv70qM7Xjv0AeSYD2P0ClH"   // адрес Gram (TON)
+  usdtTrc20: "",           // USDT address (TRC20)
+  btc: "",                 // BTC address
+  eth: "",                 // ETH address
+  ton: "UQBZr79XeiaKddZQu-vvKA-ZpaTv70qM7Xjv0AeSYD2P0ClH"   // Gram (TON) address
 };
 // ============================================================
 
 const METHODS = [
-  { key: "yoomoney",  cls: "c-ym",  sym: "₽",   name: "ЮMoney",       hint: "Карта, СБП, без комиссии" },
-  { key: "usdtTrc20", cls: "c-usdt", sym: "U",  name: "USDT · TRC20", hint: "Сеть TRON (TRC20)" },
-  { key: "btc",       cls: "c-btc",  sym: "₿",  name: "Bitcoin",      hint: "Сеть Bitcoin" },
-  { key: "eth",       cls: "c-eth",  sym: "Ξ",  name: "Ethereum",     hint: "Сеть Ethereum (ERC-20)" },
-  { key: "ton",       cls: "c-ton",  sym: "G",  name: "Gram (TON)",   hint: "Сеть TON · Telegram Wallet, DeFi Счёт" }
+  { key: "yoomoney",  cls: "c-ym",  sym: "₽",   name: "YooMoney",     hint: "Card / SBP (RU), no fee" },
+  { key: "usdtTrc20", cls: "c-usdt", sym: "U",  name: "USDT · TRC20", hint: "TRON (TRC20) network" },
+  { key: "btc",       cls: "c-btc",  sym: "₿",  name: "Bitcoin",      hint: "Bitcoin network" },
+  { key: "eth",       cls: "c-eth",  sym: "Ξ",  name: "Ethereum",     hint: "Ethereum network (ERC-20)" },
+  { key: "ton",       cls: "c-ton",  sym: "G",  name: "Gram (TON)",   hint: "TON network · Telegram Wallet, DeFi Account" }
 ];
 
 const grid = document.getElementById("grid");
@@ -316,13 +316,13 @@ function render() {
         <div class="addr">${display}</div>
         <div class="actions">
           <button class="btn ghost" data-qr="${m.key}">QR</button>
-          <button class="btn" data-copy="${value.replace(/"/g, '&quot;')}">Скопировать адрес</button>
+          <button class="btn" data-copy="${value.replace(/"/g, '&quot;')}">Copy address</button>
         </div>
       </div>
     `);
   }
   if (!cards.length) {
-    grid.innerHTML = `<p class="sub" style="text-align:center;padding:24px 0;">Адреса ещё не добавлены.</p>`;
+    grid.innerHTML = `<p class="sub" style="text-align:center;padding:24px 0;">No payment addresses added yet.</p>`;
     return;
   }
   grid.innerHTML = cards.join("");
